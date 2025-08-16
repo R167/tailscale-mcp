@@ -1,0 +1,11 @@
+version: 2
+
+dockers:
+  - image_templates:
+      - "ghcr.io/r167/tailscale-mcp:{{ .Version }}"
+      - "ghcr.io/r167/tailscale-mcp:latest"
+    dockerfile: Dockerfile
+    use: buildx
+    build_flag_templates:
+      - --platform=linux/amd64
+      - --platform=linux/arm64

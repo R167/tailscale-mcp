@@ -1,0 +1,36 @@
+# Binaries
+tailscale-mcp
+*.exe
+
+# Git
+.git
+.gitignore
+
+# CI/CD
+.github/
+
+# IDE
+.vscode/
+.idea/
+
+# Go
+*.test
+*.out
+coverage.out
+
+# Documentation
+README.md
+CHANGELOG.md
+*.md
+
+# Local development
+.env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+tmp/
+temp/
