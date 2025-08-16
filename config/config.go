@@ -76,7 +76,6 @@ func createTailscaleClient(tailnet string) (*tailscale.Client, error) {
 		oauthConfig := tailscale.OAuthConfig{
 			ClientID:     clientID,
 			ClientSecret: clientSecret,
-			Scopes:       []string{"devices", "routes"},
 		}
 
 		return &tailscale.Client{
