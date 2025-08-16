@@ -4,12 +4,12 @@ import (
 	"context"
 	"encoding/json"
 
+	"github.com/R167/tailscale-mcp/internal"
 	"github.com/modelcontextprotocol/go-sdk/jsonschema"
 	"github.com/modelcontextprotocol/go-sdk/mcp"
-	tailscale "tailscale.com/client/tailscale/v2"
 )
 
-func RegisterDeviceTools(server *mcp.Server, client *tailscale.Client) {
+func RegisterDeviceTools(server *mcp.Server, client internal.TailscaleClient) {
 	// List devices tool
 	mcp.AddTool(
 		server,

@@ -31,12 +31,15 @@ func Start() {
 	tools.RegisterKeyTools(server, cfg.Client)
 
 	// Create HTTP handler
-	handler := mcp.NewStreamableHTTPHandler(
+	mcpHandler := mcp.NewStreamableHTTPHandler(
 		func(req *http.Request) *mcp.Server {
 			return server
 		},
 		&mcp.StreamableHTTPOptions{},
 	)
+
+	// Wrap with middleware for request context and logging
+	handler := RequestMiddleware(mcpHandler)
 
 	// Setup HTTP server
 	httpServer := &http.Server{
