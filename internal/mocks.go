@@ -37,9 +37,28 @@ func (m *MockTailscaleClient) Keys() KeysResource {
 
 // MockDevicesResource is a mock implementation for testing
 type MockDevicesResource struct {
+	ListFunc              func(ctx context.Context) ([]tailscale.Device, error)
 	ListWithAllFieldsFunc func(ctx context.Context) ([]tailscale.Device, error)
 	GetWithAllFieldsFunc  func(ctx context.Context, deviceID string) (*tailscale.Device, error)
 	SubnetRoutesFunc      func(ctx context.Context, deviceID string) (*tailscale.DeviceRoutes, error)
+}
+
+func (m *MockDevicesResource) List(ctx context.Context) ([]tailscale.Device, error) {
+	if m.ListFunc != nil {
+		return m.ListFunc(ctx)
+	}
+	return []tailscale.Device{
+		{
+			ID:        "device1",
+			Name:      "test-device-1",
+			Addresses: []string{"100.1.1.1"},
+		},
+		{
+			ID:        "device2",
+			Name:      "test-device-2",
+			Addresses: []string{"100.1.1.2"},
+		},
+	}, nil
 }
 
 func (m *MockDevicesResource) ListWithAllFields(ctx context.Context) ([]tailscale.Device, error) {

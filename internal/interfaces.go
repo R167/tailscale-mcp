@@ -15,6 +15,7 @@ type TailscaleClient interface {
 
 // DevicesResource defines the interface for device operations
 type DevicesResource interface {
+	List(ctx context.Context) ([]tailscale.Device, error)
 	ListWithAllFields(ctx context.Context) ([]tailscale.Device, error)
 	GetWithAllFields(ctx context.Context, deviceID string) (*tailscale.Device, error)
 	SubnetRoutes(ctx context.Context, deviceID string) (*tailscale.DeviceRoutes, error)
@@ -50,6 +51,10 @@ func (t *TailscaleClientAdapter) Keys() KeysResource {
 // DevicesResourceAdapter adapts the real DevicesResource
 type DevicesResourceAdapter struct {
 	*tailscale.DevicesResource
+}
+
+func (d *DevicesResourceAdapter) List(ctx context.Context) ([]tailscale.Device, error) {
+	return d.DevicesResource.List(ctx)
 }
 
 func (d *DevicesResourceAdapter) ListWithAllFields(ctx context.Context) ([]tailscale.Device, error) {

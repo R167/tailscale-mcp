@@ -400,6 +400,10 @@ type mockDevicesResource struct{}
 type mockPolicyFileResource struct{}
 type mockKeysResource struct{}
 
+func (m *mockDevicesResource) List(ctx context.Context) ([]tailscale.Device, error) {
+	return nil, nil
+}
+
 func (m *mockDevicesResource) ListWithAllFields(ctx context.Context) ([]tailscale.Device, error) {
 	return nil, nil
 }
