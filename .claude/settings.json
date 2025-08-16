@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(go mod:*)",
+      "Bash(go doc:*)",
+      "Bash(go list:*)",
+      "Bash(go build:*)",
+      "WebFetch(domain:modelcontextprotocol.io)",
+      "Bash(go get:*)",
+      "Bash(go fmt:*)",
+      "Bash(go test:*)",
+      "WebFetch(domain:docs.anthropic.com)"
+    ],
+    "deny": [],
+    "ask": []
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/format-go.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
