@@ -16,7 +16,7 @@ func RegisterDeviceTools(server *mcp.Server, client internal.TailscaleClient) {
 		server,
 		&mcp.Tool{
 			Name:        "list_devices",
-			Description: "List all devices in the Tailscale network",
+			Description: "List all devices in the Tailscale network with basic information (name, addresses, status, OS, user, tags)",
 			InputSchema: &jsonschema.Schema{
 				Type:                 "object",
 				AdditionalProperties: &jsonschema.Schema{Not: &jsonschema.Schema{}},
@@ -28,7 +28,45 @@ func RegisterDeviceTools(server *mcp.Server, client internal.TailscaleClient) {
 				return toolError("Failed to list devices", err), nil
 			}
 
-			output, err := json.MarshalIndent(devices, "", "  ")
+			// Create concise summary for each device
+			type DeviceSummary struct {
+				ID        string   `json:"id"`
+				Name      string   `json:"name"`
+				Hostname  string   `json:"hostname"`
+				Addresses []string `json:"addresses"`
+				OS        string   `json:"os"`
+				User      string   `json:"user"`
+				Tags      []string `json:"tags,omitempty"`
+				Status    string   `json:"status"`
+				LastSeen  string   `json:"lastSeen,omitempty"`
+			}
+
+			var summaries []DeviceSummary
+			for _, device := range devices {
+				status := "offline"
+				if !device.LastSeen.IsZero() {
+					status = "online"
+				}
+
+				summary := DeviceSummary{
+					ID:        device.ID,
+					Name:      device.Name,
+					Hostname:  device.Hostname,
+					Addresses: device.Addresses,
+					OS:        device.OS,
+					User:      device.User,
+					Tags:      device.Tags,
+					Status:    status,
+				}
+
+				if !device.LastSeen.IsZero() {
+					summary.LastSeen = device.LastSeen.String()
+				}
+
+				summaries = append(summaries, summary)
+			}
+
+			output, err := json.MarshalIndent(summaries, "", "  ")
 			if err != nil {
 				return toolError("Failed to serialize device list", err), nil
 			}
