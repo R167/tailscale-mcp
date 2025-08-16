@@ -6,9 +6,10 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/R167/tailscale-mcp/internal"
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 	tailscale "tailscale.com/client/tailscale/v2"
+
+	"github.com/R167/tailscale-mcp/internal"
 )
 
 func TestRegisterDeviceTools(t *testing.T) {

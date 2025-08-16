@@ -5,8 +5,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/R167/tailscale-mcp/internal"
 	tailscale "tailscale.com/client/tailscale/v2"
+
+	"github.com/R167/tailscale-mcp/internal"
 )
 
 func TestLoad_Success_APIKey(t *testing.T) {

@@ -6,8 +6,9 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/R167/tailscale-mcp/internal"
 	tailscale "tailscale.com/client/tailscale/v2"
+
+	"github.com/R167/tailscale-mcp/internal"
 )
 
 type Config struct {

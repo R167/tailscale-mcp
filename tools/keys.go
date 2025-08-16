@@ -4,9 +4,10 @@ import (
 	"context"
 	"encoding/json"
 
-	"github.com/R167/tailscale-mcp/internal"
 	"github.com/modelcontextprotocol/go-sdk/jsonschema"
 	"github.com/modelcontextprotocol/go-sdk/mcp"
+
+	"github.com/R167/tailscale-mcp/internal"
 )
 
 func RegisterKeyTools(server *mcp.Server, client internal.TailscaleClient) {
